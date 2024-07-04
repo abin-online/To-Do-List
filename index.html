@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  
+</head>
+<body>
+    <div class="container">
+        <div class="todo-list mx-auto col-md-6">
+            <h3 class="text-center mb-4">To-Do List</h3>
+            <form id="todo-form" class="d-flex mb-4">
+                <input type="text" id="todo-input" class="form-control" placeholder="Add a new task...">
+                <button type="submit" class="btn btn-primary ms-2">Add</button>
+            </form>
+            <ul id="todo-items" class="list-unstyled">
+                <!-- To-Do items will be appended here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const todoForm = document.getElementById('todo-form');
+            const todoInput = document.getElementById('todo-input');
+            const todoItems = document.getElementById('todo-items');
+
+            todoForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const taskText = todoInput.value.trim();
+                if (taskText !== '') {
+                    addTodoItem(taskText);
+                    todoInput.value = '';
+                }
+            });
+
+            function addTodoItem(taskText) {
+                const listItem = document.createElement('li');
+                listItem.className = 'todo-item d-flex align-items-center justify-content-between';
+
+                const span = document.createElement('span');
+                span.className = 'flex-grow-1';
+                span.textContent = taskText;
+
+                const completeBtn = document.createElement('button');
+                completeBtn.className = 'btn btn-success btn-sm me-2';
+                completeBtn.textContent = 'Complete';
+                completeBtn.addEventListener('click', function () {
+                    span.classList.toggle('todo-item-completed');
+                });
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn-delete';
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.addEventListener('click', function () {
+                    listItem.remove();
+                });
+
+                listItem.appendChild(span);
+                listItem.appendChild(completeBtn);
+                listItem.appendChild(deleteBtn);
+
+                todoItems.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>
